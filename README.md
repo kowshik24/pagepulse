@@ -36,6 +36,7 @@ go build -ldflags "-X 'pagepulse/internal/buildinfo.Version=v0.1.0' -X 'pagepuls
 ```
 
 GitHub Actions CI runs formatting checks, unit tests, and race tests on pushes and PRs.
+GitHub Actions release pipeline builds cross-platform binaries and publishes them as release assets for `v*` tags.
 
 ## API Endpoints
 - `GET /api/v1/summary`: current telemetry + trend arrays.
@@ -56,3 +57,16 @@ Remaining / potential enhancements:
 - Frontend unit tests (JS rendering/format helpers).
 - Optional disk/interface filters configurable via flags.
 - Export snapshots (CSV/JSON) and alert thresholds.
+
+## Releases
+Create a version tag to publish binaries:
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Release artifacts include:
+- `pagepulse_linux_amd64`, `pagepulse_linux_arm64`
+- `pagepulse_darwin_amd64`, `pagepulse_darwin_arm64`
+- `pagepulse_windows_amd64.exe`, `pagepulse_windows_arm64.exe`
+- matching `.sha256` checksum files
