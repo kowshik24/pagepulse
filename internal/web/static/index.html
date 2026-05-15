@@ -7,34 +7,137 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <main class="container">
-    <header class="topbar">
-      <div>
-        <h1>PagePulse</h1>
-        <p id="hostMeta">Waiting for telemetry...</p>
-        <p id="buildMeta" class="build-meta">build: loading...</p>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-brand">
+        <div class="hero-title-row">
+          <div class="hero-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <rect x="6" y="8" width="52" height="48" rx="10" stroke="currentColor" stroke-width="4"/>
+              <path d="M10 40H22L28 28L34 45L42 22L46 31H56" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h1><span class="brand-soft">Page</span><span class="brand-accent">Pulse</span></h1>
+        </div>
+        <p>Lightweight system telemetry dashboard for real-time insights.</p>
       </div>
-      <div class="topbar-actions">
-        <span id="connState" class="badge offline">offline</span>
-        <button id="themeToggle" class="btn">Toggle Theme</button>
+      <div class="hero-right">
+        <ul class="hero-points">
+          <li><strong><span class="icon-chip">⚡</span>Live Metrics</strong><span>Real-time CPU, memory, disk, and network</span></li>
+          <li><strong><span class="icon-chip">◉</span>JSON APIs & SSE</strong><span>Consume metrics via JSON REST APIs or Server-Sent Events</span></li>
+          <li><strong><span class="icon-chip">⌘</span>Built with Go</strong><span>Fast, lightweight, and easy to deploy</span></li>
+        </ul>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="dial"></div>
+          <div class="mascot">
+            <div class="mascot-core">Go</div>
+          </div>
+        </div>
       </div>
-    </header>
-
-    <section class="grid">
-      <article class="card"><h2>CPU</h2><p id="cpu">--</p></article>
-      <article class="card"><h2>Memory</h2><p id="memory">--</p></article>
-      <article class="card"><h2>Disk</h2><p id="disk">--</p></article>
-      <article class="card"><h2>Network</h2><p id="network">--</p></article>
     </section>
 
-    <section class="card charts">
-      <h2>Recent Trends</h2>
-      <canvas id="trendChart" width="1000" height="260"></canvas>
-    </section>
+    <section class="workspace">
+      <aside class="sidebar">
+        <h2 class="logo">PagePulse</h2>
+        <nav>
+          <a class="active" href="#"><span class="nav-ic">⌂</span>Overview</a>
+          <a href="#"><span class="nav-ic">◉</span>CPU</a>
+          <a href="#"><span class="nav-ic">◍</span>Memory</a>
+          <a href="#"><span class="nav-ic">▣</span>Disk</a>
+          <a href="#"><span class="nav-ic">⟷</span>Network</a>
+          <a href="#"><span class="nav-ic">⌘</span>API</a>
+          <a href="#"><span class="nav-ic">⚙</span>Settings</a>
+        </nav>
+        <div class="side-status">
+          <span id="connState" class="badge offline">offline</span>
+          <p id="hostMeta">Waiting for telemetry...</p>
+          <p id="buildMeta" class="build-meta">build: loading...</p>
+        </div>
+      </aside>
 
-    <section class="card">
-      <h2>Resources</h2>
-      <pre id="resources">Loading...</pre>
+      <section class="content">
+        <header class="content-top">
+          <h3>Overview</h3>
+          <div class="actions">
+            <span class="chip">Last 1 minute</span>
+            <span class="chip live-chip">● Live</span>
+            <button id="themeToggle" class="btn">Toggle Theme</button>
+          </div>
+        </header>
+
+        <section class="metric-grid">
+          <article class="metric-card metric-cpu">
+            <h4>CPU</h4>
+            <p id="cpu">--</p>
+            <span id="cpuMeta">--</span>
+            <canvas id="cpuMini" width="240" height="48"></canvas>
+          </article>
+          <article class="metric-card metric-mem">
+            <h4>Memory</h4>
+            <p id="memory">--</p>
+            <span id="memoryMeta">--</span>
+            <canvas id="memMini" width="240" height="48"></canvas>
+          </article>
+          <article class="metric-card metric-disk">
+            <h4>Disk</h4>
+            <p id="disk">--</p>
+            <span id="diskMeta">--</span>
+            <canvas id="diskMini" width="240" height="48"></canvas>
+          </article>
+          <article class="metric-card metric-net">
+            <h4>Network</h4>
+            <p id="network">--</p>
+            <span id="netMeta">--</span>
+            <canvas id="netMini" width="240" height="48"></canvas>
+          </article>
+        </section>
+
+        <section class="charts-grid">
+          <article class="panel">
+            <header><h4>CPU Usage (%)</h4></header>
+            <div class="legend-row"><span id="cpuLegend">--</span></div>
+            <canvas id="cpuChart" width="760" height="220"></canvas>
+          </article>
+          <article class="panel">
+            <header><h4>Memory Usage (%)</h4></header>
+            <div class="legend-row"><span id="memLegend">--</span></div>
+            <canvas id="memChart" width="760" height="220"></canvas>
+          </article>
+          <article class="panel">
+            <header><h4>Disk Usage (%)</h4></header>
+            <div class="legend-row"><span id="diskLegend">--</span></div>
+            <canvas id="diskChart" width="760" height="220"></canvas>
+          </article>
+          <article class="panel">
+            <header><h4>Network Throughput (MB/s)</h4></header>
+            <div class="legend-row"><span id="netLegend">--</span></div>
+            <canvas id="netChart" width="760" height="220"></canvas>
+          </article>
+        </section>
+
+        <section class="bottom-grid">
+          <article class="panel">
+            <header><h4>API Endpoints</h4></header>
+            <ul class="api-list">
+              <li><code>GET</code> <span>/api/v1/summary</span></li>
+              <li><code>GET</code> <span>/api/v1/stream</span></li>
+              <li><code>GET</code> <span>/api/v1/resources</span></li>
+              <li><code>GET</code> <span>/api/v1/version</span></li>
+            </ul>
+          </article>
+
+          <article class="panel">
+            <header><h4>Recent Alerts</h4></header>
+            <p class="ok-line">✓ No active alerts</p>
+            <p class="muted-line">Everything looks good.</p>
+          </article>
+
+          <article class="panel">
+            <header><h4>Resources</h4></header>
+            <pre id="resources">Loading...</pre>
+          </article>
+        </section>
+      </section>
     </section>
   </main>
 
