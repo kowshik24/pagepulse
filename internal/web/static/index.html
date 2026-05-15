@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PagePulse</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <div>
+        <h1>PagePulse</h1>
+        <p id="hostMeta">Waiting for telemetry...</p>
+        <p id="buildMeta" class="build-meta">build: loading...</p>
+      </div>
+      <div class="topbar-actions">
+        <span id="connState" class="badge offline">offline</span>
+        <button id="themeToggle" class="btn">Toggle Theme</button>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card"><h2>CPU</h2><p id="cpu">--</p></article>
+      <article class="card"><h2>Memory</h2><p id="memory">--</p></article>
+      <article class="card"><h2>Disk</h2><p id="disk">--</p></article>
+      <article class="card"><h2>Network</h2><p id="network">--</p></article>
+    </section>
+
+    <section class="card charts">
+      <h2>Recent Trends</h2>
+      <canvas id="trendChart" width="1000" height="260"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Resources</h2>
+      <pre id="resources">Loading...</pre>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

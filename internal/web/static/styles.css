@@ -1,0 +1,49 @@
+:root {
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --text: #101625;
+  --muted: #5b667f;
+  --accent: #2d79f3;
+  --ok: #19a974;
+  --bad: #d64545;
+  --grid: rgba(16, 22, 37, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1020;
+  --surface: #121a31;
+  --text: #edf1ff;
+  --muted: #92a1c4;
+  --accent: #66a6ff;
+  --ok: #28d391;
+  --bad: #ff6b6b;
+  --grid: rgba(237, 241, 255, 0.12);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top right, #16325f 0%, var(--bg) 42%);
+  color: var(--text);
+}
+.container { max-width: 1080px; margin: 0 auto; padding: 24px; }
+.topbar { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.topbar h1 { margin: 0; letter-spacing: 0.3px; }
+.topbar p { margin: 8px 0 0; color: var(--muted); }
+.topbar .build-meta { margin-top: 4px; font-size: 12px; opacity: 0.9; }
+.topbar-actions { display: flex; gap: 10px; align-items: center; }
+.badge { border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.badge.online { background: rgba(25,169,116,0.2); color: var(--ok); }
+.badge.offline { background: rgba(214,69,69,0.2); color: var(--bad); }
+.btn { border: 0; border-radius: 8px; background: var(--accent); color: white; padding: 10px 12px; cursor: pointer; font-weight: 700; }
+.grid { display: grid; margin-top: 20px; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--grid); border-radius: 14px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.card h2 { margin: 0 0 8px; color: var(--muted); font-size: 14px; text-transform: uppercase; letter-spacing: 0.6px; }
+.card p { margin: 0; font-size: 28px; font-weight: 700; }
+.charts { margin-top: 14px; }
+#trendChart { width: 100%; border-radius: 8px; background: color-mix(in oklab, var(--surface), black 6%); }
+pre { margin: 0; white-space: pre-wrap; color: var(--muted); }
+@media (max-width: 700px) {
+  .topbar { flex-direction: column; align-items: flex-start; }
+}
