@@ -37,6 +37,7 @@ go build -ldflags "-X 'pagepulse/internal/buildinfo.Version=v0.1.0' -X 'pagepuls
 
 GitHub Actions CI runs formatting checks, unit tests, and race tests on pushes and PRs.
 GitHub Actions release pipeline builds cross-platform binaries and publishes them as release assets for `v*` tags.
+GitHub Actions auto-tag pipeline can create the next `v*` tag from commit messages on `main`.
 
 ## API Endpoints
 - `GET /api/v1/summary`: current telemetry + trend arrays.
@@ -59,11 +60,24 @@ Remaining / potential enhancements:
 - Export snapshots (CSV/JSON) and alert thresholds.
 
 ## Releases
-Create a version tag to publish binaries:
+Manual tag flow:
 ```bash
 git tag v0.1.0
 git push origin v0.1.0
 ```
+
+Automatic flow:
+- Push commits to `main`.
+- Workflow `.github/workflows/auto-tag.yml` calculates the next semantic tag and pushes it.
+- Pushed tag triggers `.github/workflows/release.yml`, which publishes binaries/checksums.
+- Required once: add repo secret `RELEASE_PAT` (GitHub Personal Access Token with `repo` scope) so auto-created tags can trigger the release workflow.
+
+Commit-message bump rules:
+- `feat: ...` -> minor bump
+- `BREAKING CHANGE` in commit body -> major bump
+- everything else -> patch bump
+
+To skip auto-tag for a commit, include `[skip-tag]` in the commit message.
 
 Release artifacts include:
 - `pagepulse_linux_amd64`, `pagepulse_linux_arm64`
